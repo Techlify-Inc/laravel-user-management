@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Facade;
  * Description of LaravelUserManagementFacade
  *
  * @author 
+ * @since
  */
 class LaravelUserManagementFacade extends Facade
 {
