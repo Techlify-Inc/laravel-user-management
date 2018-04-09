@@ -3,7 +3,7 @@
 namespace TechlifyInc\LaravelUserManagement;
 
 /**
- * Description of Rbac
+ * Description of LaravelUserManagement
  *
  * @author 
  */

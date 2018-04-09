@@ -5,7 +5,7 @@ namespace TechlifyInc\LaravelUserManagement;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Description of RbacServiceProvider
+ * Description of LaravelUserManagementServiceProvider
  *
  * @author 
  */
@@ -30,12 +30,12 @@ class LaravelUserManagementServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(LaravelRbac::class, function ()
+        $this->app->singleton(LaravelUserManagement::class, function ()
         {
-            return new LaravelRbac();
+            return new LaravelUserManagement();
         });
 
-        $this->app->alias(LaravelRbac::class, 'laravel-rbac');
+        $this->app->alias(LaravelUserManagement::class, 'laravel-user-management');
     }
 
 }
