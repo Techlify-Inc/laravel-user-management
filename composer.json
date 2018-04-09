@@ -1,0 +1,31 @@
+{
+    "name": "techlify-inc/laravel-user-management",
+    "description": "A Module with API Services for Laravel User Management",
+    "type": "package",
+    "require": {
+        "techlify-inc/laravel-rbac": ">=0.3.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Techlify Inc.",
+            "email": "info@techlify.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "TechlifyInc\\LaravelUserManagement\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TechlifyInc\\LaravelUserManagement\\LaravelUserManagementServiceProvider"
+            ],
+            "aliases": {
+                "Debugbar": "TechlifyInc\\LaravelUserManagement\\LaravelUserManagementFacade"
+            }
+        }
+    }
+}
