@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use TechlifyInc\LaravelRbac\Models\Permission;
 
@@ -17,10 +15,18 @@ class CreatePermissions extends Migration
     {
         $models = array(
             /* User  Permissions */
-            array('name' => 'user_create', 'label' => "User: Add"),
-            array('name' => 'user_read', 'label' => "User: View"),
-            array('name' => 'user_update', 'label' => "User: Edit"),
-            array('name' => 'user_delete', 'label' => "User: Delete"),
+            array('slug' => 'user_create', 'label' => "User: Add"),
+            array('slug' => 'user_read', 'label' => "User: View"),
+            array('slug' => 'user_update', 'label' => "User: Edit"),
+            array('slug' => 'user_delete', 'label' => "User: Delete"),
+            
+            /* Role Permissions */
+            array('slug' => 'role_create', 'label' => "Role: Add"),
+            array('slug' => 'role_read', 'label' => "Role: View"),
+            array('slug' => 'role_update', 'label' => "Role: Edit"),
+            array('slug' => 'role_delete', 'label' => "Role: Delete"),
+            array('slug' => 'role_permission_add', 'label' => "Role Permission: Delete"),
+            array('slug' => 'role_permission_remove', 'label' => "Role Permission: Delete"),
         );
 
         $model = new Permission;
