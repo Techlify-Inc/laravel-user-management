@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use TechlifyInc\LaravelRbac\Models\Permission;
 
-class CreatePermissions extends Migration
+class CreateLaravelUserManagementPermissions extends Migration
 {
 
     /**
@@ -13,6 +13,9 @@ class CreatePermissions extends Migration
      */
     public function up()
     {
+        /* Call the down method to remove any of these permissions */
+        $this->down();
+        
         $models = array(
             /* User  Permissions */
             array('slug' => 'user_create', 'label' => "User: Add"),
