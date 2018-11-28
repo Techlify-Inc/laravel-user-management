@@ -1,5 +1,4 @@
 <?php
-
 namespace TechlifyInc\LaravelUserManagement\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -17,23 +16,21 @@ class CurrentUserController extends Controller
     public function show()
     {
         $id = auth()->id();
-        $user = \Illuminate\Support\Facades\Auth::user();   
-        
-        if(null == $user)
-        {
+        $user = \Illuminate\Support\Facades\Auth::user();
+
+        if (null == $user) {
             return array("user" => new User());
         }
-                
+
         $permissions = new \Illuminate\Database\Eloquent\Collection();
-        
-        foreach ($user->roles as $role)
-        {
-            $permissions = $permissions->merge($role->permissions);
+        if (isset($user->roles) && is_array($user->roles)) {
+            foreach ($user->roles as $role) {
+                $permissions = $permissions->merge($role->permissions);
+            }
         }
 
         $user->permissions = $permissions->unique();
 
         return array("user" => $user, "id" => $id);
     }
-
 }
