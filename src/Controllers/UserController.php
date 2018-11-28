@@ -1,5 +1,4 @@
 <?php
-
 namespace TechlifyInc\LaravelUserManagement\Controllers;
 
 use App\User;
@@ -11,11 +10,6 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-    public function __construct()
-    {
-        
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -23,24 +17,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (!auth()->user()->hasPermission("user_read"))
-        {
+        if (!auth()->user()->hasPermission("user_read")) {
             return response()->json(['error' => "You are unauthorized to perform this action. "], 401);
         }
 
         $users = User::with('roles')->get();
 
         return array("items" => $users);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -51,14 +34,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if (!auth()->user()->hasPermission("user_create"))
-        {
+        if (!auth()->user()->hasPermission("user_create")) {
             return response()->json(['error' => "You are unauthorized to perform this action. "], 401);
         }
 
         $this->validate(request(), [
-            "name" => "required",
-            "email" => "required|email",
+            "name"     => "required",
+            "email"    => "required|email",
             "password" => "required",
         ]);
 
@@ -66,18 +48,14 @@ class UserController extends Controller
         $user->name = request('name');
         $user->email = request('email');
         $user->password = bcrypt(request('password'));
-        if (!$user->save())
-        {
+        if (!$user->save()) {
             return response()->json(['error' => "Failed to add the new user. "], 422);
         }
 
         $roles = request('roles') ?: array();
-        if (is_array($roles))
-        {
-            foreach ($roles as $rid => $selected)
-            {
-                if (!$selected)
-                {
+        if (is_array($roles)) {
+            foreach ($roles as $rid => $selected) {
+                if (!$selected) {
                     continue;
                 }
                 $role = Role::find($rid);
@@ -85,7 +63,7 @@ class UserController extends Controller
             }
         }
 
-        return array("item" => $user);
+        return ["item" => $user];
     }
 
     /**
@@ -96,23 +74,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        if (!auth()->user()->hasPermission("user_read"))
-        {
+        if (!auth()->user()->hasPermission("user_read")) {
             return response()->json(['error' => "You are unauthorized to perform this action. "], 401);
         }
 
-        return array("item" => $user);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
+        return ["item" => $user];
     }
 
     /**
@@ -124,38 +90,32 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if (!auth()->user()->hasPermission("user_update"))
-        {
+        if (!auth()->user()->hasPermission("user_update")) {
             return response()->json(['error' => "You are unauthorized to perform this action. "], 401);
         }
 
         $this->validate(request(), [
-            "name" => "required",
+            "name"  => "required",
             "email" => "required",
         ]);
 
         $user->name = request('name');
         $user->email = request('email');
 
-        if (request('password') && "" != trim(request("password")) && null != request("password"))
-        {
+        if (request('password') && "" != trim(request("password")) && null != request("password")) {
             $user->password = bcrypt(request('password'));
         }
 
-        if (!$user->save())
-        {
+        if (!$user->save()) {
             return response()->json(['error' => "Failed to add the new user. "], 422);
         }
 
         $user->roles()->detach();
 
-        $roles = request('roles') ?: array();
-        if (is_array($roles))
-        {
-            foreach ($roles as $rid => $selected)
-            {
-                if (!$selected)
-                {
+        $roles = request('roles') ?: [];
+        if (is_array($roles)) {
+            foreach ($roles as $rid => $selected) {
+                if (!$selected) {
                     continue;
                 }
                 $role = Role::find($rid);
@@ -163,7 +123,7 @@ class UserController extends Controller
             }
         }
 
-        return array("item" => $user);
+        return ["item" => $user];
     }
 
     /**
@@ -174,8 +134,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if (!auth()->user()->hasPermission("user_delete"))
-        {
+        if (!auth()->user()->hasPermission("user_delete")) {
             return response()->json(['error' => "You are unauthorized to perform this action. "], 401);
         }
 
@@ -185,7 +144,7 @@ class UserController extends Controller
         /* Delete the user object */
         $deleted = $user->delete();
 
-        return array("item" => $user, "success" => $deleted);
+        return ["item" => $user, "success" => $deleted];
     }
 
     /**
@@ -197,26 +156,23 @@ class UserController extends Controller
     public function user_password_change_own()
     {
         $this->validate(request(), [
-            "newPassword" => "required",
+            "newPassword"     => "required",
             "currentPassword" => "required",
         ]);
 
         $user = User::find(auth()->id());
 
         /* Check if the current password entered is the actual current password */
-        if (!Hash::check(request('currentPassword'), $user->password))
-        {
+        if (!Hash::check(request('currentPassword'), $user->password)) {
             return response()->json(['error' => "Invalid current password entered. "], 422);
         }
 
         $user->password = bcrypt(request('newPassword'));
 
-        if (!$user->save())
-        {
+        if (!$user->save()) {
             return response()->json(['error' => "Failed to add the new user. "], 422);
         }
 
-        return array("item" => $user, "success" => true);
+        return ["item" => $user, "success" => true];
     }
-
 }

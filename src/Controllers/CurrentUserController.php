@@ -19,7 +19,7 @@ class CurrentUserController extends Controller
         $user = \Illuminate\Support\Facades\Auth::user();
 
         if (null == $user) {
-            return array("user" => new User());
+            return ["user" => new User()];
         }
 
         $permissions = new \Illuminate\Database\Eloquent\Collection();
@@ -31,6 +31,6 @@ class CurrentUserController extends Controller
 
         $user->permissions = $permissions->unique();
 
-        return array("user" => $user, "id" => $id);
+        return ["user" => $user, "id" => $id];
     }
 }

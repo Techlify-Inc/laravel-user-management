@@ -1,5 +1,4 @@
 <?php
-
 namespace TechlifyInc\LaravelUserManagement\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -14,8 +13,7 @@ class SessionController extends Controller
      */
     public function destroy()
     {
-        if (!Auth::check())
-        {
+        if (!Auth::check()) {
             return response([
                 'message' => 'Invalid token or user already logged out. ',
                 'success' => false
@@ -24,9 +22,9 @@ class SessionController extends Controller
         $accessToken = Auth::user()->token();
 
         DB::table('oauth_refresh_tokens')
-                ->where('access_token_id', $accessToken->id)
-                ->update([
-                    'revoked' => true
+            ->where('access_token_id', $accessToken->id)
+            ->update([
+                'revoked' => true
         ]);
 
         $accessToken->revoke();
@@ -36,5 +34,4 @@ class SessionController extends Controller
             'success' => true
         ]);
     }
-
 }
