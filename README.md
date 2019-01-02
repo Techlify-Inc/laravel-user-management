@@ -1,5 +1,7 @@
 # LaravelUserManagement
 
+This package is now deprecated. It has been added to the LaravelRbac Package
+
 A simple package for Laravel that provides user management services
 
 ## Installation
