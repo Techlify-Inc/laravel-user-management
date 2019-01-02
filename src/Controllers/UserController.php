@@ -175,4 +175,56 @@ class UserController extends Controller
 
         return ["item" => $user, "success" => true];
     }
+
+    /**
+     * Enable the user account
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function enable($id)
+    {
+        if (!auth()->user()->hasPermission("user_enable")) {
+            return response()->json(['error' => "You are unauthorized to perform this action. "], 401);
+        }
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['error' => "No such user exists. "], 422);
+        }
+
+        $user->enabled = true;
+        if (!$user->save()) {
+            return response()->json(['error' => "Failed to enable the user. "], 422);
+        }
+
+        return ["item" => $user];
+    }
+
+    /**
+     * Disable the user account
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function disable($id)
+    {
+        if (!auth()->user()->hasPermission("user_disable")) {
+            return response()->json(['error' => "You are unauthorized to perform this action. "], 401);
+        }
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['error' => "No such user exists. "], 422);
+        }
+
+        $user->enabled = false;
+        if (!$user->save()) {
+            return response()->json(['error' => "Failed to disable the user. "], 422);
+        }
+
+        return ["item" => $user];
+    }
 }

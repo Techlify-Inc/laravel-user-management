@@ -15,21 +15,19 @@ class CreateLaravelUserManagementPermissions extends Migration
     {
         /* Call the down method to remove any of these permissions */
         $this->down();
-        
-        $models = array(
-            /* User  Permissions */
-            array('slug' => 'user_create', 'label' => "User: Add"),
-            array('slug' => 'user_read', 'label' => "User: View"),
-            array('slug' => 'user_update', 'label' => "User: Edit"),
-            array('slug' => 'user_delete', 'label' => "User: Delete"),
-            /* Role Permissions */
-            array('slug' => 'role_create', 'label' => "Role: Add"),
-            array('slug' => 'role_read', 'label' => "Role: View"),
-            array('slug' => 'role_update', 'label' => "Role: Edit"),
-            array('slug' => 'role_delete', 'label' => "Role: Delete"),
-            array('slug' => 'role_permission_add', 'label' => "Role Permission: Delete"),
-            array('slug' => 'role_permission_remove', 'label' => "Role Permission: Delete"),
-        );
+
+        $models = [
+            ['slug' => 'user_create', 'label' => "User: Add"],
+            ['slug' => 'user_read', 'label' => "User: View"],
+            ['slug' => 'user_update', 'label' => "User: Edit"],
+            ['slug' => 'user_delete', 'label' => "User: Delete"],
+            ['slug' => 'role_create', 'label' => "Role: Add"],
+            ['slug' => 'role_read', 'label' => "Role: View"],
+            ['slug' => 'role_update', 'label' => "Role: Edit"],
+            ['slug' => 'role_delete', 'label' => "Role: Delete"],
+            ['slug' => 'role_permission_add', 'label' => "Role Permission: Delete"],
+            ['slug' => 'role_permission_remove', 'label' => "Role Permission: Delete"],
+        ];
 
         $model = new Permission;
         $table = $model->getTable();
